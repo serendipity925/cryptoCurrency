@@ -22,14 +22,27 @@ public class BinanceApiService {
     @Value("${load.url}")
     private String loadUrl;
 
-    public String[][] load(@NotNull @Valid CoinRequest request) {
+    @Value("${load.limit}")
+    private Integer limit;
+
+
+    public String[][] load(@NotNull @Valid CoinRequest request, @NotNull int limit, @NotNull long startTime, @NotNull long endTime) {
         String url = String.format(
-                loadUrl, request.getSymbol(), request.getStartTime(), request.getEndTime()
+                loadUrl, request.getSymbol(), startTime, endTime, limit
         );
-        System.out.println(url);
         ResponseEntity<String[][]> response = restTemplate.getForEntity(url, String[][].class);
         return response.getBody();
     }
+
+    /*public String[][] load(@NotNull @Valid CoinRequest request) {
+        String url = String.format(
+                loadUrl, request.getSymbol(), request.getStartTime(), request.getEndTime(), limit
+        );
+        ResponseEntity<String[][]> response = restTemplate.getForEntity(url, String[][].class);
+        return response.getBody();
+    }
+
+     */
 }
 
 

@@ -71,4 +71,6 @@ public interface KlineMyBatisRepository {
             "</script>"
     })
     public int batchInsert(@Param("klineList")@NotEmpty List<@Valid Kline> klineList);
+
+
 }
