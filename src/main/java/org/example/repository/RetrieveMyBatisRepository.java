@@ -7,4 +7,6 @@ import java.util.List;
 @Repository
 public interface RetrieveMyBatisRepository {
     public List<Kline> getKlineData();
+
+    public List<Kline> getTargetData(String symbol, Long openTime, Long closeTime, int freq);
 }

@@ -1,6 +1,7 @@
 package org.example.service;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.example.model.CoinRequest;
 import org.example.model.exception.ApiInputException;
@@ -26,23 +27,13 @@ public class BinanceApiService {
     private Integer limit;
 
 
-    public String[][] load(@NotNull @Valid CoinRequest request, @NotNull int limit, @NotNull long startTime, @NotNull long endTime) {
+    public String[][] load(@NotEmpty String symbol, @NotNull int limit, @NotNull long startTime, @NotNull long endTime) {
         String url = String.format(
-                loadUrl, request.getSymbol(), startTime, endTime, limit
+                loadUrl, symbol, startTime, endTime, limit
         );
         ResponseEntity<String[][]> response = restTemplate.getForEntity(url, String[][].class);
         return response.getBody();
     }
-
-    /*public String[][] load(@NotNull @Valid CoinRequest request) {
-        String url = String.format(
-                loadUrl, request.getSymbol(), request.getStartTime(), request.getEndTime(), limit
-        );
-        ResponseEntity<String[][]> response = restTemplate.getForEntity(url, String[][].class);
-        return response.getBody();
-    }
-
-     */
 }
 
 

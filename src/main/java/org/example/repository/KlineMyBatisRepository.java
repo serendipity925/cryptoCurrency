@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface KlineMyBatisRepository {
     @Select("select * from kline_time_price")
-    public List < Kline > findAll();
+    public List <Kline> findAll();
 
     @Select("SELECT * FROM kline_time_price WHERE symbol = #{symbol} AND open_time = #{openTime} AND close_time = #{closeTime}")
     public Kline findBySymbolStartEnd(@NotBlank String symbol, @NotNull Long openTime, @NotNull Long closeTime);
