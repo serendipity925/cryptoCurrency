@@ -28,33 +28,18 @@ public class LoadController {
 
     @PostMapping("/loadData")
     public ResponseEntity<String> loadData(@RequestBody @NotNull @Valid CoinRequest coinRequestInfo) {
-        validationService.validateSymbol(coinRequestInfo.getSymbol());
-        validationService.validateInputData(coinRequestInfo.getStartTime(), coinRequestInfo.getEndTime());
 
         long startTime = coinRequestInfo.getStartTime();
         long endTime = coinRequestInfo.getEndTime();
         String symbol = coinRequestInfo.getSymbol();
 
+        validationService.validateSymbol(symbol);
+        validationService.validateInputData(startTime, endTime);
+
+
         service.load(symbol, startTime, endTime);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @Autowired
-    private RetrieveMyBatisRepository retrieveService;
-
-    @GetMapping("/getData")
-    public List<Kline> getData(){
-        return this.retrieveService.getKlineData();
-    }
-
-    @GetMapping("/targetData/symbol/{symbol}/startTime/{startTime}/endTime/{endTime}/freq/{freq}")
-    public List<Kline> getTargetData(@PathVariable("symbol") @NotEmpty String symbol,
-                                     @PathVariable("startTime") @NotEmpty String startTime,
-                                     @PathVariable("endTime") @NotEmpty String endTime,
-                                     @PathVariable("freq") @NotNull int freq){
-        return this.retrieveService.getTargetData(symbol, Long.parseLong(startTime), Long.parseLong(endTime), freq);
-    }
-
 }
 
 //TODO: Retrieve controller, get mapping, input(symbol, startTime, endTime, frequency)

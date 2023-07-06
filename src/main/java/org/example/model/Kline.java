@@ -33,5 +33,4 @@ public class Kline {
     private BigDecimal takerBuyBaseAssetVolume;
     @NotNull
     private BigDecimal takerBuyQuoteAssetVolume;
-
 }
